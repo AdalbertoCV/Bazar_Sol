@@ -17,11 +17,11 @@ services:
 
   db:
     image: mariadb
-    container_name: inscripciones-db
+    container_name: tienda-db
     #restart: always
     environment:
-      MYSQL_DATABASE: inscripciones
-      MYSQL_USER: inscripcionesuser
+      MYSQL_DATABASE: tienda
+      MYSQL_USER: tiendauser
       MYSQL_PASSWORD: "admin1234"
       MYSQL_ROOT_PASSWORD: admin1234
     volumes:
