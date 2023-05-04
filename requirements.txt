@@ -1,0 +1,4 @@
+django==4.1.6
+mysqlclient==2.1.1
+Pillow==9.5.0
+six==1.16.0
