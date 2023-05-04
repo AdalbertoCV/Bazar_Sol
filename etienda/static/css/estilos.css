@@ -1,0 +1,13 @@
+.btn{
+    font-size: 16px;
+    color: white;
+    padding: 7px;
+    border-radius: 3px;
+}
+.btn-rojo{
+    background-color: red;
+}
+
+.btn-verde{
+    background-color: green;
+}
