@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Eliminar usuario</h2>
+  <p>¿Está seguro de que desea eliminar esta cuenta?</p>
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar la cuenta</button>
+    <a href="{% url 'lista_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+{% endblock %}

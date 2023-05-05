@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login - P4CH3C0S Fashion</title>
+
+    <!-- Plugins -->
+    <link rel="stylesheet" href="{% static 'css/vendor.bundle.base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %}" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'img/tienda.png' %}" />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    {% if mensaje %}
+      <div class="alert alert-info" role="alert">
+        {{ mensaje }}
+      </div>
+    {% endif %}
+
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-4 col-sm-6">
+          <div class="card mx-auto">
+            <div class="card-body">
+              <div class="text-center">
+                <h4 class="card-title">Bienvenido a P4CH3C0S Fashion</h4>
+                <h6 class="card-subtitle mb-4 text-muted">Inicia sesión para continuar</h6>
+              </div>
+
+              <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="username">Usuario:</label>
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Ingrese su nombre de usuario" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Contraseña:</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese su contraseña" required>
+                </div>
+
+                <div class="form-group mt-4">
+                  <button type="submit" class="btn btn-block btn-primary font-weight-medium auth-form-btn">Ingresar</button>
+                </div>
+
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember-me">
+                    <label class="form-check-label" for="remember-me">Mantener sesión iniciada</label>
+                  </div>
+                  <a href="#" class="auth-link text-black">Olvidaste tu contraseña?</a>
+                </div>
+              </form>
+
+              <div class="mt-4 text-center">
+                <p class="mb-0">¿No tienes cuenta? <a href="{% url 'nuevo_cliente' %}" class="text-primary">Regístrate</a></p>
+                <p class="mb-0">¿Eres administrador? <a href="{% url 'nuevo_admin' %}" class="text-primary">Accede aquí</a></p>
+                </div>
+                <input type="hidden" value="{{next}}" name="next">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </body>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{% static 'js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
+  <script src="{% static 'js/todolist.js' %}"></script>
+  <!-- endinject -->
+</body>
+
+</html>
+

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Lista De Usuarios
+{% endblock titulo %}
+
+{% block contenido %}
+
+<div class="container">
+    <h1 class="text-center">Lista de usuarios</h1>
+    
+    <div class="mt-3">
+      <input type="checkbox" id="todos">
+      <label for="todos">Seleccionar todas</label>
+    </div>
+    
+    <form action="{% url 'asignar_usuarios' %}" method="post" id="validar">
+      {% csrf_token %}
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Selecciones</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Grupo Pertenece</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for usuario in object_list %}
+          <tr>
+            <td>
+              <input type="checkbox" name="usuarios[]" value="{{ usuario.id }}">
+            </td>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>
+              {% for grupo in usuario.groups.all %}
+                {{ grupo.name }}
+                {% if not forloop.last %}
+                , 
+                {% endif %}
+      
+              {% empty %}
+                No pertenece a ningún grupo.
+              {% endfor %}
+            </td>
+            <td>
+              <form></form>
+
+              <form method="post" action="{% url 'eliminar_usuario' usuario.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">Eliminar Usario</button>
+              </form>
+
+              <form method="post" action="{% url 'editar_usuario' usuario.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-primary">Editar Usario</button>
+              </form>
+
+              <form method="post" action="{% url 'eliminar_grupo' usuario.id %}">
+                {% csrf_token %}
+                <button type ="submit" class="btn btn-sm btn-danger">Eliminar Grupo:</button>
+                <select name="grupo2">
+                  {% for grupo in usuario.groups.all %}
+                  <option value="{{grupo.id}}">{{grupo.name}}</option>
+                  {% endfor %}
+                </select>
+              </form>
+
+              <form method="post" action="{% url 'asignar_grupo' usuario.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-warning">Asignar:</button>
+                <select name="grupo2">
+                  {% for grupo in grupos %}
+                  <option value="{{grupo.id}}">{{grupo.name}}</option>
+                  {% endfor %}
+                </select>
+              </form>
+
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <select name="grupo">
+        {% for grupo in grupos %}
+            <option value="{{grupo.id}}">{{grupo.name}}</option>
+        {% endfor %}
+      </select>
+      
+      <div class="mt-3">
+        <button type="submit" class="btn btn-warning">Asignar </button>
+      </div>
+    </form>
+
+
+    <div class="pagination">
+      <ul class="pagination justify-content-center">
+  
+          {% if page_obj.has_previous %}
+              <li class="page-item">
+                  <a class="page-link" href="?page=1">&laquo; Regresar al principio</a>
+              </li>
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+              </li>
+          {% endif %}
+  
+          <li class="page-item disabled">
+              <a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+          </li>
+  
+          {% if page_obj.has_next %}
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+              </li>
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Ultima página &raquo;</a>
+              </li>
+          {% endif %}
+  
+      </ul>
+  </div>
+
+    {% block scripts %}
+        <script>
+            function enviar(page){
+                $("#page").val(page);
+                $("#form").submit();
+            }
+        </script>
+
+        <script>
+            // Seleccionar/deseleccionar todos los checkboxes
+            const seleccionarTodo = document.querySelector('#todos');
+            const checks = document.querySelectorAll('input[type="checkbox"]:not(#todos)');
+          
+            seleccionarTodo.addEventListener('change', (evento) => {
+              checks.forEach((checkbox) => {
+                checkbox.checked = evento.target.checked;
+              });
+            });
+
+            // Eliminar los items seleccionados al enviar el formulario
+            const formulario = document.querySelector('#validar');
+            formulario.addEventListener('submit', (evento) => {
+                const Seleccionados = document.querySelectorAll('input[type="checkbox"]:checked:not(#todos)');
+                if (Seleccionados.length === 2) {
+                    evento.preventDefault();
+                    alert('Por favor selecciona al menos un usuario para asignar a su grupo.');
+                } else {
+                    const confimar = confirm(`¿Estás seguro que deseas asignar estos roles a estos usuario(s)?`);
+
+                // si no deseamos eliminar las N cantidad de checkbox o materias entonces no hace nada, ya que se va a POST y lo toma
+                // que si eliminamos algo, entonces ponemos lo siguiente
+                if (!confimar) {
+                    evento.preventDefault();
+                }
+                }
+            });
+        </script>
+
+    {% endblock scripts %}
+</div>
+{% endblock contenido %}

@@ -1,6 +1,7 @@
 FROM debian:bullseye-slim
 
-RUN apt-get update
+RUN apt-get update -y
+
 RUN apt-get install apache2 python3 python3-pip libmariadb-dev \
     libapache2-mod-wsgi-py3 python-dev openssh-client \
     python3-cffi python3-brotli libpango-1.0-0 libpangoft2-1.0-0 \
