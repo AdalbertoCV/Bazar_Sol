@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Lista de Artículos
+{% endblock titulo %}
+
+{% block contenido %}
+    <form action="" method="post" id="form">
+        {% csrf_token %}
+        <div class="container">
+            <div class="border p-4 m-4">
+                 <p class="display-4 pl-4 ml-4">Lista de Artículos</p>
+                 <hr>
+                 <table class="table" width="400" border="1" cellspacing="0" cellpadding="0">
+                     <thead>
+                         <tr>
+                             <th>ID</th>
+                             <th>Imagen</th>
+                             <th>Nombre</th>                             
+                             <th>Precio ($)</th>
+                             <th>Talla</th>
+                             <th>Descripción</th> 
+                             <th>Acciones</th> 
+                         </tr>
+                     </thead>
+                     <tbody>                         
+                        {% for articulo in articulos %}
+                         <tr>       
+                            <td>{{articulo.id}}</td>                      
+                            <td><img  src="{{articulo.imagen.url}}" alt=""></td>
+                            <td>{{articulo.nombre}}</td>
+                            <td>{{articulo.precio}}</td>
+                            <td>{{articulo.talla}}</td>
+                            <td width="100%" height="77" valign="top" style="text-align:justify">{{articulo.descripcion}}</td>                             
+                            <td><a class="btn btn-sm btn-success" href="{% url 'editar_articulo' articulo.id %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                  </svg>
+                                </a>
+                            </td>
+                            <td><a class="btn btn-sm btn-danger" href="{% url 'eliminar_articulo' articulo.id %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                  </svg>
+                                </a>
+                            </td>
+                         </tr>  
+                        {% endfor %}                        
+                     </tbody>         
+                 </table>       
+                </div>                
+         </div>  
+    </form>
+    <div class="pagination">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a href="?{{page_request_var}}={{ object_list.previous_page_number }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                  </svg> Anterior </a>
+            {% endif %}
+        
+            <span class="current">
+                {{ object_list.number }} de {{ object_list.paginator.num_pages }}
+            </span>
+        
+            {% if object_list.has_next %}
+                <a href="?{{page_request_var}}={{ object_list.next_page_number }}"> Siguiente <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                  </svg></a></a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock contenido %} 
+

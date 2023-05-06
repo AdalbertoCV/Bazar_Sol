@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Agregar Artículo
+{% endblock titulo %}
+  
+{% block contenido %}
+    <h1>{{accion}} Artículo</h1><br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-info" type="submit">
+            
+            {% if accion == 'Agregar' %}
+                Agregar                
+            {% endif %}
+                
+        </button>
+    </form>
+{% endblock contenido %}

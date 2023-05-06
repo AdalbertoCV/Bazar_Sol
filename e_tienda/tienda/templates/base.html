@@ -29,11 +29,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        <div class="me-3">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
-            <span class="icon-menu"></span>
-          </button>
-        </div>
+        
         <div>
           <a href="{% url 'home' %}" class="navbar-brand brand-logo" href="">
             <img src="{% static 'img/tienda_logo.svg' %}" alt="logo" />
@@ -257,23 +253,32 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-
           <li class="nav-item nav-category">Usuario Iniciado</li>
+          <li class="nav-item">
             <li class="nav-item">
-              <li class="nav-item">
-                <a class="nav-link">{{user}}</a>
-              </li>      
-            </li>  
+              <a class="nav-link">{{user}}</a>
+            </li>        
           </li>
-
-          {% if 'usuarios.permiso_administrador' in perms %}
+          <li class="nav-item nav-category"> Catálogo</li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'catalogo_articulos' %}">Catálogo de Artículos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'lista_articulos' %}">Lista de Artículos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'agregar_articulo' %}">Agregar Artículo</a>
+          </li>
+        </li> 
+        </li>
+        <li class="nav-item nav-category"> Carrito</li>      
+        </li>
+        {% if 'usuarios.permiso_administrador' in perms %}
             {% include 'menu_administradores.html' %}
-          {% endif  %}
-
-          <li>
-            <li class="nav-item nav-category"> Catálogo</li>      
-          </li>
-        <li class="nav-item nav-category"> Carrito</li>        
+        {% endif  %}    
+        </li>
+        <li class="nav-item nav-category"> Usuarios</li>      
+        </li>
         </ul>
       </nav>
       <!-- partial -->
