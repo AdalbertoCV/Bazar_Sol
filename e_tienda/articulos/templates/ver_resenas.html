@@ -1,0 +1,70 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    
+{% endblock titulo %}
+    
+
+{% block contenido %}
+    <form action="" method="post" id="form">
+        <div class="text-center">
+            <h2 class="text-3x1 tracking-tight font-extrabold text-gray-900 sm:text-4x1">
+                Lista de reseñas de {{articulo.nombre}}
+            </h2>
+            <p class="mt-3 max-w-2x1 mx-auto text-1 text-gray-500 sm:mt-4">
+                Lo que las personas opinan...
+            </p>
+        </div>
+    
+        <div class="contenedor_general">
+            {% for resena in resenas %}
+                <div class="contenedor_resena">
+                    <div class="cont_sup">
+                        <div class="contenedor_nombre_fecha">
+                        
+                            <strong>{{resena.user}}</strong>
+                            <span>{{resena.fecha}}</span>
+                        </div>
+                        <div class="contenedor_estrellas">
+                            {% if resena.estrellas == '1' %}
+                            
+                                <i class="fas fa-star"></i>
+                                               
+                            {% elif resena.estrellas == '2' %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+        
+                            {% elif resena.estrellas == '3' %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+        
+                            {% elif resena.estrellas == '4' %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            {% endif %}
+                                
+                        </div>
+                    </div>
+                    <div class="contenedor_descripcion">
+                        <p>{{resena.descripcion}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="contenedor_boton_agregar">
+            <a class="btn btn-success" style="font-size:large;" href="{% url 'agregar_resena' articulo.id %}">Agregar Reseña</a>
+        </div>    
+    </form>
+{% endblock contenido %}
+    

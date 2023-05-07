@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Articulo
-from .forms import FormArticulo
+from .models import Articulo, Resena
+from .forms import FormArticulo, FormResena
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def lista_articulos(request):
@@ -72,3 +73,31 @@ def eliminar_articulo(request, id):
     Articulo.objects.get(id = id).delete()
     return redirect('lista_articulos')
 
+def VerResenas(request, id):
+    resenas = Resena.objects.filter(articulo = id)
+    articulo = Articulo.objects.get(id=id)
+    context={
+        'articulo': articulo,
+        'resenas':resenas
+    }
+    return render(request, 'ver_resenas.html', context)
+
+@login_required
+def AgregarResena(request, id):
+    articulo = Articulo.objects.get(id = id)
+    
+
+    if request.method == 'POST':
+        form = FormResena(request.POST)
+        if form.is_valid():
+            form1 = form.save(commit=False)
+            form1.articulo = articulo
+            form1.user = request.user
+            form1.save()
+            return redirect('ver_resenas',articulo.id)
+    else:
+        form = FormResena() 
+    context = {
+        'form': form
+    }
+    return render(request, 'agregar_resena.html', context)

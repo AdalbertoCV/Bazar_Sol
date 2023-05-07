@@ -1,5 +1,7 @@
 from django.db import models
 from .validators import image_validator, directory_path
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 TALLAS = [
@@ -8,6 +10,15 @@ TALLAS = [
     ('M', 'Mediana'),
     ('G', 'Grande'),
     ('XL', 'Extra Grande'),
+]
+
+ESTRELLAS = [
+    ('', 'No estrellas'),
+    ('1','1 Estrella'),
+    ('2','2 Estrellas'),
+    ('3','3 Estrellas'),
+    ('4','4 Estrellas'),
+    ('5','5 Estrellas'),
 ]
 
 class Articulo(models.Model):
@@ -23,4 +34,13 @@ class Articulo(models.Model):
     
     class Meta:
         ordering = ["id"]
-    
+
+class Resena(models.Model):
+    descripcion = models.TextField(max_length=500)
+    estrellas = models.CharField(max_length=12,choices=ESTRELLAS)
+    fecha = models.DateField(auto_now_add=True)
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} - {self.fecha}"
