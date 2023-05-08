@@ -273,38 +273,15 @@
               <a class="nav-link">{{user}}</a>
             </li>        
           </li>
-          <li class="nav-item nav-category"> Catálogo</li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'catalogo_articulos' %}">Catálogo de Artículos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'lista_articulos' %}">Lista de Artículos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'agregar_articulo' %}">Agregar Artículo</a>
-          </li>
-        </li> 
-        </li>
-        <li class="nav-item nav-category"> Carrito</li>  
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'ver_carrito' user.cliente.Carrito.id %}"> Carrito </a>
-        </li>    
-        </li>
-        <li class="nav-item nav-category"> Reportes</li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'lista_ventas' %}">Lista de ventas</a>
-        </li>  
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'reporte_venta' %}">Reporte Mensual</a>
-        </li>       
-        </li>
+          
         {% if 'usuarios.permiso_administrador' in perms %}
             {% include 'menu_administradores.html' %}
+        {% endif  %}
+        
+        {% if 'usuarios.permiso_cliente' in perms %}
+            {% include 'menu_clientes.html' %}
         {% endif  %}    
-        </li>
-        <li class="nav-item nav-category"> Usuarios</li>      
-        </li>
-        </ul>
+
       </nav>
       <!-- partial -->
       <div class="main-panel">

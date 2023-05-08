@@ -1,0 +1,12 @@
+<li class="nav-item nav-category"> Carrito</li>  
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'ver_carrito' user.cliente.Carrito.id %}"> Carrito </a>
+</li>
+
+<li class="nav-item nav-category"> Catálogo</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'catalogo_articulos' %}">Catálogo de Artículos</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url 'lista_articulos' %}">Lista de Artículos</a>
+</li>

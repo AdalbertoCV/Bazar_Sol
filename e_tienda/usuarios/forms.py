@@ -50,9 +50,9 @@ class FormPerfilAdministrador(forms.ModelForm):
         exclude = ['usuario']
         
         widgets = {
+            'estado': forms.Select(attrs={'class':'form-control', 'data-url': reverse_lazy('busca_municipios')}),
             #en forma de calendario
-            'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}),
-            'estado': forms.Select(attrs={'class':'form-control', 'data-url': reverse_lazy('busca_municipios')})
+            'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'})
         }
 
 class FormPerfilCliente(forms.ModelForm):
@@ -61,9 +61,9 @@ class FormPerfilCliente(forms.ModelForm):
         exclude = ['usuario','Carrito']
         
         widgets = {
+            'estado': forms.Select(attrs={'class':'form-control', 'data-url': reverse_lazy('busca_municipios')}),
             #en forma de calendario
-            'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}),
-            'estado': forms.Select(attrs={'class':'form-control', 'data-url': reverse_lazy('busca_municipios')})
+            'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'})
         }
 
 class UserForm(forms.ModelForm):

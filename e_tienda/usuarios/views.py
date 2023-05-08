@@ -7,13 +7,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User, Group
 from django.views.generic.edit import CreateView
 from .models import Cliente, Administrador, Municipio
-from .forms import FormCliente, FormAdministrador, UserForm, FormPerfilCliente, FormPerfilAdministrador
+from .forms import UserForm, FormPerfilCliente, FormPerfilAdministrador
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from carrito.models import Carrito
-
-#def login(request):
-#    return render(request, 'login.html')
 
 def index(request):
     return render(request, 'base.html')
