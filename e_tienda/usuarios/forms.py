@@ -58,7 +58,7 @@ class FormPerfilAdministrador(forms.ModelForm):
 class FormPerfilCliente(forms.ModelForm):
     class Meta:
         model = Cliente
-        exclude = ['usuario']
+        exclude = ['usuario','Carrito']
         
         widgets = {
             #en forma de calendario

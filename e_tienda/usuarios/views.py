@@ -63,7 +63,6 @@ class RegistrarAdministrador(SuccessMessageMixin, CreateView):
 
 def primera_vez(user):
     #Verificamis si el usuario está iniciando sesión por primera vez
-    
     # Comprobar si el usuario tiene un perfil completo
     perfil = None
     if user.groups.filter(name='administrador').exists():
@@ -271,6 +270,9 @@ def perfil_cliente(request):
         cliente = form.save(commit=False)
         cliente.usuario = request.user
         cliente.save()
+        carrito = Carrito(None,None,None,None,None,None,None,None,None,None)
+        carrito.save()
+        Cliente.objects.filter(id=cliente.id).update(Carrito = carrito)
         return redirect('home')
 
     context = {

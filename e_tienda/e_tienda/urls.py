@@ -3,10 +3,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from tienda.views import Bienvenida
+from  usuarios.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Bienvenida.as_view(), name="home"),
+    path('', LoginView.as_view(), name="login_home"),
+    path('home/', Bienvenida.as_view(), name="home"),
     path('usuarios/', include('usuarios.urls')),
     path('articulos/', include('articulos.urls')),
     path('carrito/', include('carrito.urls')),
