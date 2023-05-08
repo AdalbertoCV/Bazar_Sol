@@ -285,7 +285,18 @@
           </li>
         </li> 
         </li>
-        <li class="nav-item nav-category"> Carrito</li>      
+        <li class="nav-item nav-category"> Carrito</li>  
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'ver_carrito' user.cliente.Carrito.id %}"> Carrito </a>
+        </li>    
+        </li>
+        <li class="nav-item nav-category"> Reportes</li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'lista_ventas' %}">Lista de ventas</a>
+        </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'reporte_venta' %}">Reporte Mensual</a>
+        </li>       
         </li>
         {% if 'usuarios.permiso_administrador' in perms %}
             {% include 'menu_administradores.html' %}

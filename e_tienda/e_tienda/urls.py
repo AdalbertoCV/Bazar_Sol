@@ -9,6 +9,8 @@ urlpatterns = [
     path('', Bienvenida.as_view(), name="home"),
     path('usuarios/', include('usuarios.urls')),
     path('articulos/', include('articulos.urls')),
+    path('carrito/', include('carrito.urls')),
+    path('reportes/', include('reportes.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

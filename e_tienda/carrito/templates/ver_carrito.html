@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    
+{% endblock titulo %}
+    
+
+{% block contenido %}
+    <form action="" method="post" id="form">
+        <div class="text-center">
+            <h2 class="text-3x1 tracking-tight font-extrabold text-gray-900 sm:text-4x1">
+                Carrito de {{user|upper}}
+            </h2>
+            <p class="mt-3 max-w-2x1 mx-auto text-1 text-gray-500 sm:mt-4">
+                
+            </p>
+        </div>
+        
+        <div class="contenedor_general">
+            {% if Carrito.articulo1 != None %}
+            {{Carrito.articulo1.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo1.imagen}}" width="100" height="100"> ${{Carrito.articulo1.precio}}
+            {% endif %}
+        </div>
+        <br>
+        <div class="contenedor_general">
+            {% if Carrito.articulo2 != None %}
+            {{Carrito.articulo2.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo2.imagen}}" width="100" height="100"> ${{Carrito.articulo2.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.articulo3 != None %}
+            {{Carrito.articulo3.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo3.imagen}}" width="100" height="100"> ${{Carrito.articulo3.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.articulo4 != None %}
+            {{Carrito.articulo4.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo4.imagen}}" width="100" height="100"> ${{Carrito.articulo4.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.articulo5 != None %}
+            {{Carrito.articulo5.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo5.imagen}}" width="100" height="100">${{Carrito.articulo5.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.articulo6 != None %}
+            {{Carrito.articulo6.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo6.imagen}}" width="100" height="100"> ${{Carrito.articulo6.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.articulo7 != None %}
+            {{Carrito.articulo7.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo7.imagen}}" width="100" height="100"> ${{Carrito.articulo7.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.Articulo8 != None %}
+            {{Carrito.articulo8.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo8.imagen}}" width="100" height="100"> ${{Carrito.articulo8.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.Articulo9 != None %}
+            {{Carrito.articulo9.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo9.imagen}}" width="100" height="100"> ${{Carrito.articulo9.precio}}
+            {% endif %}
+        </div>
+        <div class="contenedor_general">
+            {% if Carrito.articulo10 != None %}
+            {{Carrito.articulo10.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo10.imagen}}" width="100" height="100"> ${{Carrito.articulo10.precio}}
+            {% endif %}
+        </div>
+        <br><a class="btn btn-info" href="{% url 'vaciar_carrito' user.cliente.Carrito.id %}">Vaciar carrito</a>
+        <a class="btn btn-info" href="{% url 'comprar_carrito' user.cliente.id %}">Comprar carrito</a>
+
+    </form>
+
+{% endblock contenido %}

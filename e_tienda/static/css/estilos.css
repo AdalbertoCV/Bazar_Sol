@@ -72,3 +72,14 @@
     max-width: 100%;
 }
 
+.table-scroll {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.btn-blanco {
+    color: #000;
+    background-color: #d0d6d8;
+    border-color: #c5ced1;
+  }

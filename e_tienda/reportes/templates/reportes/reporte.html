@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de Ventas
+{% endblock titulo %}
+
+{% block contenido %}
+    <h1> Reporte Mensual de Ventas</h1>
+    <form action="{% url 'reporte_venta' %}" method="post" id="form">
+        {% csrf_token %}
+        <table>
+            <tr>
+                 </td>
+                    <td><p> Mes:</p></td>
+                 <td>
+                 <td>
+                    <input type="number" name="mes" value="" min="1" max="12" required > 
+                 </td>
+                 <td><p> Año:</p></td>
+                 <td>
+                    <input type="number" name="año" value="" min="2000" max="2050" required/>
+                </td>
+                <td>
+                    <input class="btn btn-info" type="submit" value="Generar Reporte">
+                </td>
+            </tr>
+        </table>
+    </form>
+        <table class="table">
+            <thead>
+                 <tr>
+                    <th>Top 10 clientes del mes</th>
+                </tr>
+            </thead>
+             <tbody>
+            {% for cliente in clientes %}
+                <tr>
+                    <td>
+                        {{cliente}}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <table class = "table">
+            <thead>
+                <tr>
+                    <th>Top 10 Productos mas vendidos</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>
+                        {{producto}}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h1> Ganancias totales del mes: {{Total}}</h1>
+</form>
+{% endblock contenido %}

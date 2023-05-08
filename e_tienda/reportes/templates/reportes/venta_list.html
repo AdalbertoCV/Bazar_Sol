@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de Ventas
+{% endblock titulo %}
+
+{% block contenido %}
+    <h1> Lista de Ventas</h1>
+    <form action="{% url 'buscar_venta' %}" method="post" id="form">
+        {% csrf_token %}
+        <table>
+            <tr>
+                 <td><p> Código:</p></td>
+                 <td>
+                    <input type="number" name="id" value="" > 
+                 </td>
+                 <td><p> ID Cliente:</p></td>
+                 <td>
+                    <input type="number" name="idCliente" value="" > 
+                 </td>
+                 <td><p> Fecha inical:</p></td>
+                 <td>
+                    <input type="date" name="inicio" value="2000-01-01" min="2000-01-01" max="2050-01-01"/>
+                </td>
+                <td><p> Fecha final:</p></td>
+                <td>
+                    <input type="date" name="fin" value="" min="2000-01-01" max="2050-01-01"/>
+                </td>
+                <td><p>¿Entregada?</p></td>
+                <td>
+                    <select name = 'entregada'>
+                        <option value="">------</option>
+                        <option value="1">Sí</option>
+                        <option value="2">No</option>
+                    </select>
+                </td>
+                <td>
+                    <input class="btn btn-info" type="submit" value="Buscar">
+                </td>
+            </tr>
+        </table>
+    </form>
+        <table class="table table-scroll">
+            <thead>
+                 <tr>
+                    <th>Id venta</th>
+                    <th> Id Cliente</th>
+                    <th> Nombre Cliente</th>
+                    <th>Productos</th>
+                    <th>Precios</th>
+                    <th>Fecha venta</th>
+                    <th>¿Entregada?</th>
+                </tr>
+            </thead>
+             <tbody>
+            {% for venta in Ventas %}
+                <tr>
+                    <td> {{venta.id}}</td>
+                    <td> {{venta.cliente.id}}</td>
+                    <td> {{venta.cliente.nombre}} {{venta.cliente.apellido_paterno}} {{venta.cliente.apellido_materno}} </td>
+                    <td> 
+                        {% if venta.articulo1 != None %}
+                           - {{venta.articulo1.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo2 != None %}
+                            {{venta.articulo2.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo3 != None %}
+                            {{venta.articulo3.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo4 != None %}
+                            {{venta.articulo4.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo5 != None %}
+                            {{venta.articulo5.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo6 != None %}
+                            {{venta.articulo6.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo7 != None %}
+                            {{venta.articulo7.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo8 != None %}
+                            {{venta.articulo8.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo9 != None %}
+                            {{venta.articulo9.nombre}} -
+                        {% endif %}
+                        {% if venta.articulo10 != None %}
+                            {{venta.articulo10.nombre}} -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if venta.articulo1 != None %}
+                           - ${{venta.articulo1.precio}} -
+                        {% endif %}
+                        {% if venta.articulo2 != None %}
+                            ${{venta.articulo2.precio}} -
+                        {% endif %}
+                        {% if venta.articulo3 != None %}
+                            ${{venta.articulo3.precio}} -
+                        {% endif %}
+                        {% if venta.articulo4 != None %}
+                            ${{venta.articulo4.precio}} -
+                        {% endif %}
+                        {% if venta.articulo5 != None %}
+                            ${{venta.articulo5.precio}} -
+                        {% endif %}
+                        {% if venta.articulo6 != None %}
+                            ${{venta.articulo6.precio}} -
+                        {% endif %}
+                        {% if venta.articulo7 != None %}
+                            ${{venta.articulo7.precio}} -
+                        {% endif %}
+                        {% if venta.articulo8 != None %}
+                            ${{venta.articulo8.precio}} -
+                        {% endif %}
+                        {% if venta.articulo9 != None %}
+                            ${{venta.articulo9.precio}} -
+                        {% endif %}
+                        {% if venta.articulo10 != None %}
+                            ${{venta.articulo10.precio}} -
+                        {% endif %}
+                    </td>
+                    <td> {{venta.fecha}}</td>
+                        {% if venta.entregada == True %}
+                            <td>Entregada ✔</td> 
+                        {% else %}
+                            <td><a class="btn btn-info" href="{% url 'entregar_venta' venta.id %}"> Entregar</a></td>
+                            <td><a class="btn btn-danger" href="{% url 'descartar_venta' venta.id %}"> Descartar</a></td>
+                        {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a class="btn btn-info" href="?{{page_request_var}}={{ object_list.previous_page_number }}"> Anterior </a>
+            {% endif %}
+        
+            <span class="current">
+                {{ object_list.number }} de {{ object_list.paginator.num_pages }}
+            </span>
+        
+            {% if object_list.has_next %}
+                <a class="btn btn-blanco" href="?{{page_request_var}}={{ object_list.next_page_number }}"> Siguiente </a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock contenido %}

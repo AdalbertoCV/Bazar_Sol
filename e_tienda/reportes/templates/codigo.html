@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Código de recepción
+{% endblock titulo %}
+
+{% block contenido %}
+    <h1> Código de recepción de la compra</h1>
+    <br>
+    <h2> El siguiente es tu código para recoger tu compra en la sucursal:</h2>
+    <br>
+    <h1> {{codigo}}</h1>
+    <br>
+    <h4> NOTA: Favor de guardar este código ya que por razones de seguridad no volverás a verlo una vez salgas de esta página</h4>
+    <br>
+    <a class="btn btn-info" href="{% url 'home' %}"> ¡De acuerdo!</a>
+
+{% endblock contenido %}

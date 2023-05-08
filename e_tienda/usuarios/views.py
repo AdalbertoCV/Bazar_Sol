@@ -10,6 +10,7 @@ from .models import Cliente, Administrador, Municipio
 from .forms import FormCliente, FormAdministrador, UserForm, FormPerfilCliente, FormPerfilAdministrador
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from carrito.models import Carrito
 
 #def login(request):
 #    return render(request, 'login.html')
@@ -23,7 +24,9 @@ class RegistrarCliente(SuccessMessageMixin, CreateView):
     form_class = UserForm
     success_message = '%(username)s se registró con éxito'
     success_url = reverse_lazy('login')
-    
+
+
+
     #Le asigna por defecto al grupo de cliente
     def form_valid(self, form):
         form = UserForm(self.request.POST)
@@ -35,7 +38,7 @@ class RegistrarCliente(SuccessMessageMixin, CreateView):
             user.groups.add(grupo)
         else:
             return self.render_to_response(self.get_context_data(form=form))
-        return super().form_valid(form) 
+        return super().form_valid(form)  
 
 class RegistrarAdministrador(SuccessMessageMixin, CreateView):
     model = User
