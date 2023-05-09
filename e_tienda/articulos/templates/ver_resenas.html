@@ -8,6 +8,8 @@
     
 
 {% block contenido %}
+    
+    {% if resenas.count != 0 %}
     <form action="" method="post" id="form">
         <div class="text-center">
             <h2 class="text-3x1 tracking-tight font-extrabold text-gray-900 sm:text-4x1">
@@ -61,10 +63,21 @@
                     </div>
                 </div>
             {% endfor %}
-        </div>
-        <div class="contenedor_boton_agregar">
-            <a class="btn btn-success" style="font-size:large;" href="{% url 'agregar_resena' articulo.id %}">Agregar Reseña</a>
-        </div>    
+        </div>  
     </form>
+    {% else %}
+        <div class="text-center">
+            <h2 class="">
+                No hay reseñas para {{articulo.nombre}}
+            </h2>
+            <p class="">
+                Se el primero en opinar sobre este producto!!
+            </p>
+        </div>
+    {% endif %}
+    <div class="contenedor_boton_agregar">
+        <a class="btn btn-success" style="font-size:large;" href="{% url 'agregar_resena' articulo.id %}">Agregar Reseña</a>
+    </div>  
+        
 {% endblock contenido %}
     
