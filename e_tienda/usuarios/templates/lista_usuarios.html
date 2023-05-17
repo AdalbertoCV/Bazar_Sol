@@ -49,9 +49,21 @@
             <td>
               <form></form>
 
+              {% if usuario.is_active %}
+                  <form method="post" action="{% url 'desactivar_usuario' usuario.id %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-danger">Desactivar Usuario</button>
+                  </form>
+              {% else %}
+                  <form method="post" action="{% url 'activar_usuario' usuario.id %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-success">Activar Usuario</button>
+                  </form>
+              {% endif %}
+
               <form method="post" action="{% url 'eliminar_usuario' usuario.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-danger">Eliminar Usario</button>
+                <button type="submit" class="btn btn-sm btn-danger">Eliminar Usario (Permanentemente)</button>
               </form>
 
               <form method="post" action="{% url 'editar_usuario' usuario.id %}">
@@ -61,7 +73,7 @@
 
               <form method="post" action="{% url 'eliminar_grupo' usuario.id %}">
                 {% csrf_token %}
-                <button type ="submit" class="btn btn-sm btn-danger">Eliminar Grupo:</button>
+                <button type ="submit" class="btn btn-sm btn-warning">Eliminar Grupo:</button>
                 <select name="grupo2">
                   {% for grupo in usuario.groups.all %}
                   <option value="{{grupo.id}}">{{grupo.name}}</option>
