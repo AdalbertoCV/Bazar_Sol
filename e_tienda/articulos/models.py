@@ -1,5 +1,6 @@
 from django.db import models
 from .validators import image_validator, directory_path
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 
 
@@ -23,7 +24,7 @@ ESTRELLAS = [
 
 class Articulo(models.Model):
     id =  models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100,validators=[RegexValidator('[+-/%]', inverse_match=True)])
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     talla = models.CharField(max_length=8, choices=TALLAS)
     descripcion = models.TextField(max_length=250, blank=True, null=True)

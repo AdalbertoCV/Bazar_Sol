@@ -16,7 +16,7 @@
                  </td>
                  <td><p> ID Cliente:</p></td>
                  <td>
-                    <input type="number" name="idCliente" value="" > 
+                    <input type="number" name="cliente" value="" > 
                  </td>
                  <td><p> Fecha inical:</p></td>
                  <td>
@@ -58,70 +58,8 @@
                     <td> {{venta.id}}</td>
                     <td> {{venta.cliente.id}}</td>
                     <td> {{venta.cliente.nombre}} {{venta.cliente.apellido_paterno}} {{venta.cliente.apellido_materno}} </td>
-                    <td> 
-                        {% if venta.articulo1 != None %}
-                           - {{venta.articulo1.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo2 != None %}
-                            {{venta.articulo2.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo3 != None %}
-                            {{venta.articulo3.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo4 != None %}
-                            {{venta.articulo4.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo5 != None %}
-                            {{venta.articulo5.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo6 != None %}
-                            {{venta.articulo6.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo7 != None %}
-                            {{venta.articulo7.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo8 != None %}
-                            {{venta.articulo8.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo9 != None %}
-                            {{venta.articulo9.nombre}} -
-                        {% endif %}
-                        {% if venta.articulo10 != None %}
-                            {{venta.articulo10.nombre}} -
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if venta.articulo1 != None %}
-                           - ${{venta.articulo1.precio}} -
-                        {% endif %}
-                        {% if venta.articulo2 != None %}
-                            ${{venta.articulo2.precio}} -
-                        {% endif %}
-                        {% if venta.articulo3 != None %}
-                            ${{venta.articulo3.precio}} -
-                        {% endif %}
-                        {% if venta.articulo4 != None %}
-                            ${{venta.articulo4.precio}} -
-                        {% endif %}
-                        {% if venta.articulo5 != None %}
-                            ${{venta.articulo5.precio}} -
-                        {% endif %}
-                        {% if venta.articulo6 != None %}
-                            ${{venta.articulo6.precio}} -
-                        {% endif %}
-                        {% if venta.articulo7 != None %}
-                            ${{venta.articulo7.precio}} -
-                        {% endif %}
-                        {% if venta.articulo8 != None %}
-                            ${{venta.articulo8.precio}} -
-                        {% endif %}
-                        {% if venta.articulo9 != None %}
-                            ${{venta.articulo9.precio}} -
-                        {% endif %}
-                        {% if venta.articulo10 != None %}
-                            ${{venta.articulo10.precio}} -
-                        {% endif %}
-                    </td>
+                    <td> {{venta.detalle}}</td>
+                    <td> {{venta.total}}</td>
                     <td> {{venta.fecha}}</td>
                         {% if venta.entregada == True %}
                             <td>Entregada ✔</td> 

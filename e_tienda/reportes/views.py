@@ -26,7 +26,6 @@ def BuscarVentas(request):
     ventas = Venta.objects.all()
     if request.method == 'POST':
         id = request.POST.get('id',None)
-        carrito = request.POST.get('carrito',None)
         cliente = request.POST.get('cliente',None)
         inicio = request.POST.get('inicio',None)
         fin= request.POST.get('fin',None)
@@ -57,8 +56,6 @@ def BuscarVentas(request):
             ventas =ventas.filter(id =id)
         if cliente:
             ventas = ventas.filter(cliente__id = cliente)
-        if carrito:
-            ventas = ventas.filter(carrito__id = carrito)
         if entregada == '1':
             ventas = ventas.filter(entregada= True)
         elif entregada=='2':
@@ -86,46 +83,26 @@ def reporteMensual(request):
         anio = request.POST.get('año', None)
         if mes == 1:
             ventas = Venta.objects.filter(fecha__gte=datetime.date(int(anio),int(mes), 1),
-                                fecha__lte=datetime.date(int(anio), int(mes), 28))
+                                fecha__lte=datetime.date(int(anio), int(mes), 28), entregada=True)
         else:
             ventas = Venta.objects.filter(fecha__gte=datetime.date(int(anio),int(int(mes)-1), 28),
-                                fecha__lte=datetime.date(int(anio), int(mes), 28))
+                                fecha__lte=datetime.date(int(anio), int(mes), 28),entregada=True)
         clientes = []
         productos = []
-        total = []
-
         for venta in ventas:
+            total_ventas = total_ventas + float(venta.total)
             clientes.append(venta.cliente.id)
-            if venta.articulo1 != None:
-                productos.append(venta.articulo1.id)
-                total.append(int(venta.articulo1.precio))
-            if venta.articulo2 != None:
-                productos.append(venta.articulo2.id)
-                total.append(int(venta.articulo2.precio))
-            if venta.articulo3 != None:
-                productos.append(venta.articulo3.id)
-                total.append(int(venta.articulo3.precio))
-            if venta.articulo4 != None:
-                productos.append(venta.articulo4.id)
-                total.append(int(venta.articulo4.precio))
-            if venta.articulo5 != None:
-                productos.append(venta.articulo5.id)
-                total.append(int(venta.articulo5.precio))
-            if venta.articulo6 != None:
-                productos.append(venta.articulo6.id)
-                total.append(int(venta.articulo6.precio))
-            if venta.articulo7 != None:
-                productos.append(venta.articulo7.id)
-                total.append(int(venta.articulo7.precio))
-            if venta.articulo8 != None:
-                productos.append(venta.articulo8.id)
-                total.append(int(venta.articulo8.precio))
-            if venta.articulo9 != None:
-                productos.append(venta.articulo9.id)
-                total.append(int(venta.articulo9.precio))
-            if venta.articulo10 != None:
-                productos.append(venta.articulo10.id)
-                total.append(int(venta.articulo10.precio))
+            detalleActual = str(venta.detalle).strip()
+            productosActuales = detalleActual.split("/")
+            if len(productosActuales) > 1:
+                print(productosActuales)
+                productosActuales.pop()
+                print(productosActuales)
+                for producto in productosActuales:
+                    productos.append(producto)
+            else:
+                print(productosActuales)
+                productos.append(detalleActual)
         counter_cli = Counter(clientes)
         counter_prod = Counter(productos)
         clientes_orde = counter_cli.most_common()
@@ -145,9 +122,8 @@ def reporteMensual(request):
             ClienteActual = Cliente.objects.get(id=int(cliente[0]))
             top_clientes.append(ClienteActual.nombre)
         for producto in top_prod:
-            ProductoActual = Articulo.objects.get(id=int(producto[0]))
+            ProductoActual = Articulo.objects.get(nombre=str(producto[0]))
             top_productos.append(ProductoActual.nombre)
-        total_ventas = sum(total)
 
     context = {'clientes':top_clientes,'productos':top_productos ,'Total': total_ventas}
     return render(request, 'reportes/reporte.html', context)

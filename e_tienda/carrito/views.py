@@ -75,50 +75,71 @@ def comprarCarrito(request, id):
         except:
             existe=False
     
+    articulos = ""
+    total = 0
     try:
         a1 = Articulo.objects.get(id=carrito.articulo1.id)
+        articulos = articulos + str(a1.nombre) + "/"
+        total = total + float(a1.precio)
     except:
         a1 = None
     try:
         a2 = Articulo.objects.get(id=carrito.articulo2.id)
+        articulos = articulos + str(a2.nombre) + "/"
+        total = total + float(a2.precio)
     except:
         a2 = None
     try:
         a3 = Articulo.objects.get(id=carrito.articulo3.id)
+        articulos = articulos + str(a3.nombre) + "/"
+        total = total + float(a3.precio)
     except:
         a3= None
     try:
         a4 = Articulo.objects.get(id=carrito.articulo4.id)
+        articulos = articulos + str(a4.nombre) + "/"
+        total = total + float(a4.precio)
     except:
         a4 = None
     try:
         a5 = Articulo.objects.get(id=carrito.articulo5.id)
+        articulos = articulos + str(a5.nombre) + "/"
+        total = total + float(a5.precio)
     except:
         a5=None
     try:
         a6 = Articulo.objects.get(id=carrito.articulo6.id)
+        articulos = articulos + str(a6.nombre) + "/"
+        total = total + float(a6.precio)
     except:
         a6=None
     try:
         a7 = Articulo.objects.get(id=carrito.articulo7.id)
+        articulos = articulos + str(a7.nombre) + "/"
+        total = total + float(a7.precio)
     except:
         a7=None
     try:
         a8 = Articulo.objects.get(id=carrito.articulo8.id)
+        articulos = articulos + str(a8.nombre) + "/"
+        total = total + float(a8.precio)
     except:
         a8=None
     try:
         a9 = Articulo.objects.get(id=carrito.articulo9.id)
+        articulos = articulos + str(a9.nombre) + "/"
+        total = total + float(a9.precio)
     except:
         a9=None
     try:
         a10 = Articulo.objects.get(id=carrito.articulo10.id)
+        articulos = articulos + str(a10.nombre) + "/"
+        total = total + float(a10.precio)
     except:
         a10=None
 
     new_values = {"id": codigo, "cliente": cliente, "carrito":carrito,'fecha': dt.now(), 'entregada': False, 
-                  'articulo1':a1,'articulo2':a2,'articulo3':a3,'articulo4':a4,'articulo5':a5,
-                  'articulo6':a6,'articulo7':a7,'articulo8':a8,'articulo9':a9,'articulo10':a10}
+                  'detalle':articulos, 'total':total}
     obj = Venta(**new_values)
     obj.save()
     vaciar(idCarrito)
