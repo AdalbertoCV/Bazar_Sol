@@ -8,6 +8,9 @@ class Venta(models.Model):
     carrito = models.ForeignKey("carrito.Carrito", verbose_name="Carrito",on_delete= models.DO_NOTHING)
     fecha = models.DateTimeField(auto_now_add=True, blank=True)
     entregada = models.BooleanField(default=False)
-    detalle = models.CharField(max_length=500)
     total = models.IntegerField()
+
+class Detalle(models.Model):
+    id_venta = models.ForeignKey("Venta", verbose_name="Detalle", on_delete=models.DO_NOTHING)
+    articulo = models.ForeignKey("articulos.Articulo", verbose_name="detalleArticulo", on_delete=models.DO_NOTHING)
 

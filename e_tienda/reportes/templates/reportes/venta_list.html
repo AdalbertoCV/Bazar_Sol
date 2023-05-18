@@ -46,8 +46,7 @@
                     <th>Id venta</th>
                     <th> Id Cliente</th>
                     <th> Nombre Cliente</th>
-                    <th>Productos</th>
-                    <th>Precios</th>
+                    <th>Total</th>
                     <th>Fecha venta</th>
                     <th>¿Entregada?</th>
                 </tr>
@@ -58,7 +57,6 @@
                     <td> {{venta.id}}</td>
                     <td> {{venta.cliente.id}}</td>
                     <td> {{venta.cliente.nombre}} {{venta.cliente.apellido_paterno}} {{venta.cliente.apellido_materno}} </td>
-                    <td> {{venta.detalle}}</td>
                     <td> {{venta.total}}</td>
                     <td> {{venta.fecha}}</td>
                         {% if venta.entregada == True %}

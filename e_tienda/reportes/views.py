@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Venta
+from .models import Venta, Detalle
 from articulos.models import Articulo
 from usuarios.models import Cliente
 import datetime
@@ -74,7 +74,6 @@ def BuscarVentas(request):
 
 
 def reporteMensual(request):
-    ventas = Venta.objects.filter(entregada=True)
     top_clientes = []
     top_productos = []
     total_ventas = 0
@@ -92,17 +91,9 @@ def reporteMensual(request):
         for venta in ventas:
             total_ventas = total_ventas + float(venta.total)
             clientes.append(venta.cliente.id)
-            detalleActual = str(venta.detalle).strip()
-            productosActuales = detalleActual.split("/")
-            if len(productosActuales) > 1:
-                print(productosActuales)
-                productosActuales.pop()
-                print(productosActuales)
-                for producto in productosActuales:
-                    productos.append(producto)
-            else:
-                print(productosActuales)
-                productos.append(detalleActual)
+            articulos = Detalle.objects.filter(id_venta = venta.id)
+            for articulo in articulos:
+                productos.append(articulo.articulo.id)
         counter_cli = Counter(clientes)
         counter_prod = Counter(productos)
         clientes_orde = counter_cli.most_common()
@@ -122,7 +113,7 @@ def reporteMensual(request):
             ClienteActual = Cliente.objects.get(id=int(cliente[0]))
             top_clientes.append(ClienteActual.nombre)
         for producto in top_prod:
-            ProductoActual = Articulo.objects.get(nombre=str(producto[0]))
+            ProductoActual = Articulo.objects.get(id=int(producto[0]))
             top_productos.append(ProductoActual.nombre)
 
     context = {'clientes':top_clientes,'productos':top_productos ,'Total': total_ventas}
