@@ -11,6 +11,9 @@ from .forms import UserForm, FormPerfilCliente, FormPerfilAdministrador
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from carrito.models import Carrito
+from .models import Administrador
+from django.contrib import messages
+
 
 def index(request):
     return render(request, 'base.html')
@@ -82,20 +85,26 @@ class LoginView(LoginView):
     template_name = 'login.html'
     form_class = AuthenticationForm
 
-    def form_valid(self, form):
-        #Si el formulario es válido, iniciar sesión en la sesión del usuario
-        
-        response = super().form_valid(form)
-
-        # Verificar si el usuario está iniciando sesión por primera vez
-        user = self.request.user
-        if primera_vez(user):
-            if user.groups.filter(name='administrador'):
-                return redirect('perfil_admin')
-            elif user.groups.filter(name='cliente'):
-                return redirect('perfil_cliente')
-
-        return response
+    def post(self, request, *args, **kwargs):
+        # Procesar el formulario POST
+        form = self.get_form()
+        if form.is_valid():
+            # Si el formulario es válido, iniciar sesión en la sesión del usuario
+            response = self.form_valid(form)
+            # Verificar si el usuario está iniciando sesión por primera vez
+            user = self.request.user
+            if primera_vez(user):
+                if user.groups.filter(name='administrador'):
+                    return redirect('perfil_admin')
+                elif user.groups.filter(name='cliente'):
+                    return redirect('perfil_cliente')
+            return response
+        else:
+            # Verificar si el usuario está desactivado
+            user = self.request.user
+            if not user.is_active:
+                messages.warning(request, 'Aún no te haz sido registrado o tu cuenta ha sido desactivada. Por favor registrate, o en caso contrario contacta al administrador.')
+            return self.form_invalid(form)
 
 def busca_municipios(request):
     id_estado = request.POST.get('id_estado', None)
@@ -188,7 +197,18 @@ def EliminarUsuario(request, pk):
         usuario.delete()
         return redirect('lista_usuarios')
 
-from .models import Administrador
+def DesactivarUsuario(request, pk):
+    usuario = User.objects.get(pk=pk)
+    usuario.is_active = False
+    usuario.save()
+    return redirect('lista_usuarios')
+    
+
+def ActivarUsuario(request, pk):
+    usuario = User.objects.get(pk=pk)
+    usuario.is_active = True
+    usuario.save()
+    return redirect('lista_usuarios')
 
 def perfil(request):
     # Verificamos si el usuario es administrador
@@ -278,4 +298,3 @@ def perfil_cliente(request):
     }
 
     return render(request, 'perfil.html', context)
-
