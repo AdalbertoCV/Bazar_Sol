@@ -7,6 +7,8 @@ from collections import Counter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import random as r
 from datetime import datetime as dt
+from django.views.generic import TemplateView
+from django.db.models import Count
 
 def ListaVentas(request):
     ventas = Venta.objects.all()
@@ -128,3 +130,22 @@ def descartarVenta(request, idVenta):
     ventas = Venta.objects.all()
     Venta.objects.filter(id=idVenta).delete()
     return render(request, 'reportes/venta_list.html', {'Ventas':ventas})
+
+class graficas(TemplateView):
+    template_name = 'reportes/graficas.html'
+    detalles_ventas = Detalle.objects.all().values('articulo').annotate(cuantos = Count('articulo'))
+    articulos = Articulo.objects.all()
+
+    datosArt = []
+
+    for a in articulos:
+        cuantos = 0
+        for dv in detalles_ventas:
+            if dv['articulo'] == a.id:
+                cuantos = dv['cuantos']
+                break
+        datosArt.append({'name':a.nombre,'data':[cuantos]})
+    extra_context = {'datosArticulos': datosArt}
+    
+
+

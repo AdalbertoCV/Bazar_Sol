@@ -45,21 +45,9 @@
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
         
         <div>
-          
-          {% if user and user.cliente %}
-            {% if 'usuarios.permiso_cliente' in perms %}
-              <a href="{% url 'home' %}" class="navbar-brand brand-logo" href="">
-                <img src="{% static 'img/tienda_logo.svg' %}" alt="logo" />
-              </a>
-            {% endif %}
-          {% elif user and user.administrador %}
-            {% if 'usuarios.permiso_administrador' in perms %}
-              <a href="{% url 'home' %}" class="navbar-brand brand-logo" href="">
-                <img src="{% static 'img/tienda_logo.svg' %}" alt="logo" />
-              </a>
-            {% endif %}
-          {% endif %}
-
+          <a href="{% url 'home' %}" class="navbar-brand brand-logo" href="">
+            <img src="{% static 'img/tienda_logo.svg' %}" alt="logo" />
+          </a>
           <a class="navbar-brand brand-logo-mini" href="">
             <img src="{% static 'img/logo-mini.svg' %}" alt="logo" />
           </a>
@@ -91,15 +79,7 @@
                 </p>
                 <p class="fw-light text-muted mb-0">{{user.email}}</p>
               </div>
-              {% if user and user.cliente %}
-                {% if 'usuarios.permiso_cliente' in perms %}
-                  <a class="dropdown-item" href="{% url 'perfil_usuario' %}"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Datos Personales</a>
-                {% endif %}
-              {% elif user and user.administrador %}
-                {% if 'usuarios.permiso_administrador' in perms %}
-                  <a class="dropdown-item" href="{% url 'perfil_usuario' %}"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Datos Personales</a>
-                {% endif %}
-              {% endif %}
+              <a class="dropdown-item" href="{% url 'perfil_usuario' %}"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Datos Personales</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
@@ -294,17 +274,13 @@
             </li>        
           </li>
           
-          {% if user and user.cliente %}
-          {% if 'usuarios.permiso_cliente' in perms %}
-            {% include 'menu_clientes.html' %}
-          {% endif %}
-        {% elif user and user.administrador %}
-          {% if 'usuarios.permiso_administrador' in perms %}
+        {% if 'usuarios.permiso_administrador' in perms %}
             {% include 'menu_administradores.html' %}
-          {% endif %}
-        {% else %}
-          {% include 'menu_nuevo.html' %}
-        {% endif %}  
+        {% endif  %}
+        
+        {% if 'usuarios.permiso_cliente' in perms %}
+            {% include 'menu_clientes.html' %}
+        {% endif  %}    
 
       </nav>
       <!-- partial -->

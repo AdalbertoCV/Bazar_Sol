@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de Ventas
+{% endblock titulo %}
+
+{% block contenido %}
+<div id="grafica" style="min-width: 310px; height: 400px; margin: 0 auto;"> </div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script>
+    Highcharts.chart("grafica", {
+        chart:{
+            type:'column'
+        },
+        title:{
+            text: 'Gráfica de ventas'
+        },
+        subtitle:{
+            text: 'Cantidad de ventas por Artículo'
+        },
+        xAxis:{
+            categories: ['Artículos']
+        },
+        yAxis:{
+            min:0,
+            title:{
+                text: 'Numero de Ventas'
+            }
+        },
+        plotOptions:{
+            column:{
+                pointPaddin: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: {{datosArticulos|safe }}
+    });
+</script>
+{% endblock contenido %}
