@@ -5,6 +5,7 @@ from usuarios.models import Cliente
 from reportes.models import Venta, Detalle
 from datetime import datetime as dt
 import random as r
+from django.contrib import messages
 
 def VerCarrito(request,id):
     carrito = Carrito.objects.get(id = id)
@@ -13,33 +14,54 @@ def VerCarrito(request,id):
     }
     return render(request, 'ver_carrito.html', context)
 
+from django.contrib import messages
+
 def AgregarAlCarrito(request, id, id_carrito):
     articulos = Articulo.objects.all()
-    articulo = Articulo.objects.get(id = id)
-    carrito = Carrito.objects.get(id = id_carrito)
+    articulo = Articulo.objects.get(id=id)
+    carrito = Carrito.objects.get(id=id_carrito)
+    
+    carrito_articulo = False
 
-    if carrito.articulo1 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo1=articulo)
-    elif carrito.articulo2 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo2=articulo)
-    elif carrito.articulo3 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo3=articulo)
-    elif carrito.articulo4 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo4=articulo)
-    elif carrito.articulo5 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo5=articulo)
-    elif carrito.articulo6 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo6=articulo)
-    elif carrito.articulo7 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo7=articulo)
-    elif carrito.articulo8 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo8=articulo)
-    elif carrito.articulo9 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo9=articulo)
-    elif carrito.articulo10 == None:
-        Carrito.objects.filter(id = id_carrito).update(articulo10=articulo)
+    if carrito.articulo1 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo1=articulo)
+        carrito_articulo = True
+    elif carrito.articulo2 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo2=articulo)
+        carrito_articulo = True
+    elif carrito.articulo3 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo3=articulo)
+        carrito_articulo = True
+    elif carrito.articulo4 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo4=articulo)
+        carrito_articulo = True
+    elif carrito.articulo5 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo5=articulo)
+        carrito_articulo = True
+    elif carrito.articulo6 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo6=articulo)
+        carrito_articulo = True
+    elif carrito.articulo7 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo7=articulo)
+        carrito_articulo = True
+    elif carrito.articulo8 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo8=articulo)
+        carrito_articulo = True
+    elif carrito.articulo9 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo9=articulo)
+        carrito_articulo = True
+    elif carrito.articulo10 is None:
+        Carrito.objects.filter(id=id_carrito).update(articulo10=articulo)
+        carrito_articulo = True
+    
+    if carrito_articulo:
+        cantidad_articulos = sum(getattr(carrito, f"articulo{i}") is not None for i in range(1, 11))
+        messages.success(request, f"Agregaste {cantidad_articulos+1} artículo(s) al carrito.")
+    else:
+        messages.warning(request, "El carrito está lleno.")
+    
+    return render(request, 'catalogo_articulos.html', {'articulos': articulos})
 
-    return render(request, 'catalogo_articulos.html', {'articulos':articulos})
 
     
 def vaciarCarrito(request, id):

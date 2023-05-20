@@ -20,6 +20,25 @@
         <div class="row">
             <div id='articulos' class="col-m-9 mx-auto">
                 <div class="row mx-auto">
+                    
+                    {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            </div>
+                        {% elif message.tags == 'warning' %}
+                            <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                            </div>
+                        {% else %}
+                            <div class="alert" role="alert">
+                            {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    
                     {% for articulo in articulos %}
                         <div class="card mx-auto mb-3" id={{articulo.id}} style="width: 18rem;"><br>
                             <img class="card-img-top" src="{{articulo.imagen.url}}" alt="Card image cap">
@@ -39,7 +58,6 @@
                                 </div>
                             </div>                          
                         </div>
-                        
                     {% endfor %}
                 </div>
             </div>
