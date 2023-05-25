@@ -11,6 +11,9 @@ urlpatterns = [
     path('eliminar/<int:id>', views.eliminar_articulo, name='eliminar_articulo'),
     path('resenas/<int:id>', views.VerResenas, name='ver_resenas'),
     path('agregar_resena/<int:id>', views.AgregarResena, name='agregar_resena'),
+    path('editar_resena/<int:id>', views.EditarResena, name='editar_resena'),
+    path('eliminar_resena/<int:id>', views.EliminarResena, name='eliminar_resena'),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,6 +4,8 @@ from .models import Articulo, Resena
 from .forms import FormArticulo, FormResena
 from django.contrib.auth.decorators import login_required
 
+import math
+
 # Create your views here.
 def lista_articulos(request):
     articulos = Articulo.objects.all()
@@ -73,20 +75,64 @@ def eliminar_articulo(request, id):
     Articulo.objects.get(id = id).delete()
     return redirect('lista_articulos')
 
+@login_required
 def VerResenas(request, id):
     resenas = Resena.objects.filter(articulo = id)
     articulo = Articulo.objects.get(id=id)
-    context={
-        'articulo': articulo,
-        'resenas':resenas
-    }
+    vacia = False
+    
+    if len(resenas) == 0: #Hay reseñas?
+        vacia = True
+        context = {
+            'articulo': articulo,
+            'vacia': vacia
+        }
+    else:
+        cont = 0
+        suma = 0
+        for resena in resenas:
+            cont+=1
+            suma += int(resena.estrellas)
+            
+        promedio = suma/cont
+        promedioRedondeado = math.floor(promedio)
+
+        #Veremos si el usuario logueado tiene una reseña registrada en el producto
+        try:
+            resena_usuario = resenas.get(user = request.user)
+            hayResena = True
+        except:
+            hayResena = False
+        
+        if hayResena:
+            
+            context={
+                'articulo': articulo,
+                'resenas':resenas,
+                'hayResena':hayResena,
+                'resena_usuario':resena_usuario,
+                'promedio': promedio,
+                'promedioRedondeado': promedioRedondeado,
+                'vacia': vacia
+            }
+        else:
+            context={
+                'articulo': articulo,
+                'resenas':resenas,
+                'hayResena':hayResena,
+                'promedio': promedio,
+                'promedioRedondeado': promedioRedondeado,
+                'vacia': vacia
+            }
+
     return render(request, 'ver_resenas.html', context)
+
+
 
 @login_required
 def AgregarResena(request, id):
     articulo = Articulo.objects.get(id = id)
     
-
     if request.method == 'POST':
         form = FormResena(request.POST)
         if form.is_valid():
@@ -101,3 +147,23 @@ def AgregarResena(request, id):
         'form': form
     }
     return render(request, 'agregar_resena.html', context)
+
+def EditarResena(request, id):
+    resena = Resena.objects.get(id = id)
+    if request.method == 'POST':
+        form = FormResena(request.POST, instance=resena)
+        if form.is_valid():
+            form.save()
+            return redirect('ver_resenas',resena.articulo.id)
+    else: 
+        form = FormResena(instance=resena)
+    context = {
+        'form': form
+    }
+    return render(request, 'editar_resena.html', context)
+
+
+def EliminarResena(request, id):
+    id_articulo = Resena.objects.get(id = id).articulo.id
+    Resena.objects.get(id = id).delete()
+    return redirect('ver_resenas', id_articulo)
