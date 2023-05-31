@@ -88,7 +88,7 @@ def vaciarCarrito(request, id):
     Carrito.objects.filter(id = id).update(articulo10=None)
 
     context={
-        'carrito': carrito
+        'Carrito': carrito
     }
     return render(request, 'ver_carrito.html',context)
 
@@ -157,80 +157,140 @@ def sumarTotal(id):
 def eliminar1(request, id):
     carrito = Carrito.objects.get(id = id)
     carrito = Carrito.objects.filter(id = id).update(articulo1=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
-    return render('ver_carrito.html')
+    return render(request, 'ver_carrito.html',context)
 
 def eliminar2(request, id):
     carrito = Carrito.objects.get(id = id)
     carrito = Carrito.objects.filter(id = id).update(articulo2=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar3(request, id):
     carrito = Carrito.objects.get(id = id)
     carrito = Carrito.objects.filter(id = id).update(articulo3=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar4(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo4=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar5(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo5=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar6(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo6=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar7(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo7=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar8(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo8=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar9(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo9=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
 def eliminar10(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo10=None)
+    carrito = Carrito.objects.get(id = id)
+    lista=sumarTotal(id)
+    total = lista[0]
+    cantidad = lista[1]
     context={
-        'carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad': cantidad
     }
     return render(request, 'ver_carrito.html',context)
 
