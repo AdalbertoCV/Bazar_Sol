@@ -23,8 +23,6 @@ def VerCarrito(request,id):
     }
     return render(request, 'ver_carrito.html', context)
 
-from django.contrib import messages
-
 def AgregarAlCarrito(request, id, id_carrito):
     articulos = Articulo.objects.all()
     articulo = Articulo.objects.get(id=id)
@@ -75,22 +73,25 @@ def AgregarAlCarrito(request, id, id_carrito):
 
     
 def vaciarCarrito(request, id):
-    carrito = Carrito.objects.get(id = id)
-    Carrito.objects.filter(id = id).update(articulo1=None)
-    Carrito.objects.filter(id = id).update(articulo2=None)
-    Carrito.objects.filter(id = id).update(articulo3=None)
-    Carrito.objects.filter(id = id).update(articulo4=None)
-    Carrito.objects.filter(id = id).update(articulo5=None)
-    Carrito.objects.filter(id = id).update(articulo6=None)
-    Carrito.objects.filter(id = id).update(articulo7=None)
-    Carrito.objects.filter(id = id).update(articulo8=None)
-    Carrito.objects.filter(id = id).update(articulo9=None)
-    Carrito.objects.filter(id = id).update(articulo10=None)
+    Carrito.objects.filter(id=id).update(
+        articulo1=None,
+        articulo2=None,
+        articulo3=None,
+        articulo4=None,
+        articulo5=None,
+        articulo6=None,
+        articulo7=None,
+        articulo8=None,
+        articulo9=None,
+        articulo10=None
+    )
 
-    context={
+    carrito = Carrito.objects.get(id=id)
+    context = {
         'Carrito': carrito
     }
-    return render(request, 'ver_carrito.html',context)
+    return render(request, 'ver_carrito.html', context)
+
 
 def sumarTotal(id):
     carrito = Carrito.objects.get(id = id)

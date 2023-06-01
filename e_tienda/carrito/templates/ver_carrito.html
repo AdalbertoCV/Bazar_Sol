@@ -16,7 +16,51 @@
                 
             </p>
         </div>
+
+        {% if Carrito.articulo1 or Carrito.articulo2 or Carrito.articulo3 or Carrito.articulo4 or Carrito.articulo5 or Carrito.articulo6 or Carrito.articulo7 or Carrito.articulo8 or Carrito.articulo9 or Carrito.articulo10 %}
         
+            <div id="mostrar-temporizador"></div>
+
+            <script>
+                // Ponemos 20 segundos, igual el proceso no es tardado para tener más tiempo.
+                let contador = 20;
+
+                // Actualiza el temporizador cada segundo
+                let temporizador = setInterval(function() {
+                    
+                    // convertimos el tiempo a minutos y segundos
+                    let minutos = Math.floor(contador / 60);
+                    let segundos = contador % 60;
+
+                    // Agrega un cero al principio si los segundos son menores a 10
+                    if (segundos < 10) {
+                        segundos = '0' + segundos;
+                    } else {
+                        segundos = segundos;
+                    }
+
+                    // Muestra el temporizador en la página
+                    document.getElementById('mostrar-temporizador').innerHTML = 'Tiempo para completar tu compra: '+ minutos + ':' + segundos;
+
+                    // Reduce el tiempo en un segundo
+                    contador--;
+
+                    // Si el tiempo llega a cero
+                    if (contador < 0) {
+                        // Detiene el temporizador
+                        clearInterval(temporizador);
+
+                        // Simula un clic en el botón "Vaciar carrito"
+                        document.getElementById('acabo-Temporizador').click();
+                    }
+                // la función se ejecuta cada 1000 milisegundos, es decir, cada segundo.
+                }, 1000);
+
+            </script>
+
+        {% endif %}
+
+
         <div class="contenedor_general">
             {% if Carrito.articulo1 != None %}
             {{Carrito.articulo1.nombre}} <img src="/img/{{ BASIC_DIR }}/{{Carrito.articulo1.imagen}}" width="100" height="100"> ${{Carrito.articulo1.precio}}
@@ -87,7 +131,7 @@
             Total: ${{total}}
         </div>
 
-        <br><a class="btn btn-info" href="{% url 'vaciar_carrito' user.cliente.Carrito.id %}">Vaciar carrito</a>
+        <br><a id="acabo-Temporizador" class="btn btn-info" href="{% url 'vaciar_carrito' user.cliente.Carrito.id %}">Vaciar carrito</a>
         <a class="btn btn-info" href="{% url 'comprar_carrito' user.cliente.id %}">Comprar carrito</a>
         
 
