@@ -6,11 +6,20 @@ from reportes.models import Venta, Detalle
 from datetime import datetime as dt
 import random as r
 from django.contrib import messages
+from django.template import Template, Context
 
 def VerCarrito(request,id):
     carrito = Carrito.objects.get(id = id)
+
+    lista=sumarTotal(id)
+
+    total = lista[0]
+    cantidad = lista[1]
+
     context={
-        'Carrito': carrito
+        'Carrito': carrito,
+        'total': total,
+        'cantidad':cantidad
     }
     return render(request, 'ver_carrito.html', context)
 
@@ -22,6 +31,7 @@ def AgregarAlCarrito(request, id, id_carrito):
     carrito = Carrito.objects.get(id=id_carrito)
     
     carrito_articulo = False
+    total = 0
 
     if carrito.articulo1 is None:
         Carrito.objects.filter(id=id_carrito).update(articulo1=articulo)
@@ -82,6 +92,147 @@ def vaciarCarrito(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
+def sumarTotal(id):
+    carrito = Carrito.objects.get(id = id)
+    total = 0
+    cantidad = 0
+    lista = []
+
+
+    if carrito.articulo1 != None:
+        a1 = Articulo.objects.get(id=carrito.articulo1.id)
+        total = total + float(a1.precio)
+        cantidad = cantidad + 1
+
+    if carrito.articulo2 != None:
+        a2 = Articulo.objects.get(id=carrito.articulo2.id)
+        total = total + float(a2.precio)
+        cantidad = cantidad + 1
+
+    if carrito.articulo3 != None:
+        a3 = Articulo.objects.get(id=carrito.articulo3.id)
+        total = total + float(a3.precio)
+        cantidad = cantidad + 1
+    
+    if carrito.articulo4 != None:
+        a4 = Articulo.objects.get(id=carrito.articulo4.id)
+        total = total + float(a4.precio)
+        cantidad = cantidad + 1
+
+    if carrito.articulo5 != None:
+        a5 = Articulo.objects.get(id=carrito.articulo5.id)
+        total = total + float(a5.precio)
+        cantidad = cantidad + 1
+
+    if carrito.articulo6 != None:
+        a6 = Articulo.objects.get(id=carrito.articulo6.id)
+        total = total + float(a6.precio)
+        cantidad = cantidad + 1
+
+    if carrito.articulo7 != None:
+        a7 = Articulo.objects.get(id=carrito.articulo7.id)
+        total = total + float(a7.precio)
+        cantidad = cantidad + 1
+
+    if carrito.articulo8 != None:
+        a8 = Articulo.objects.get(id=carrito.articulo8.id)
+        total = total + float(a8.precio)
+        cantidad = cantidad + 1
+    
+    if carrito.articulo9 != None:
+        a9 = Articulo.objects.get(id=carrito.articulo9.id)
+        total = total + float(a9.precio)
+        cantidad = cantidad + 1
+
+    if carrito.articulo10 != None:
+        a10 = Articulo.objects.get(id=carrito.articulo10.id)
+        total = total + float(a10.precio)
+        cantidad = cantidad + 1
+
+    lista.append(total)
+    lista.append(cantidad)
+
+    return lista
+
+def eliminar1(request, id):
+    carrito = Carrito.objects.get(id = id)
+    carrito = Carrito.objects.filter(id = id).update(articulo1=None)
+    context={
+        'carrito': carrito
+    }
+    return render('ver_carrito.html')
+
+def eliminar2(request, id):
+    carrito = Carrito.objects.get(id = id)
+    carrito = Carrito.objects.filter(id = id).update(articulo2=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar3(request, id):
+    carrito = Carrito.objects.get(id = id)
+    carrito = Carrito.objects.filter(id = id).update(articulo3=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar4(request, id):
+    carrito = Carrito.objects.get(id = id)
+    Carrito.objects.filter(id = id).update(articulo4=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar5(request, id):
+    carrito = Carrito.objects.get(id = id)
+    Carrito.objects.filter(id = id).update(articulo5=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar6(request, id):
+    carrito = Carrito.objects.get(id = id)
+    Carrito.objects.filter(id = id).update(articulo6=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar7(request, id):
+    carrito = Carrito.objects.get(id = id)
+    Carrito.objects.filter(id = id).update(articulo7=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar8(request, id):
+    carrito = Carrito.objects.get(id = id)
+    Carrito.objects.filter(id = id).update(articulo8=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar9(request, id):
+    carrito = Carrito.objects.get(id = id)
+    Carrito.objects.filter(id = id).update(articulo9=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
+
+def eliminar10(request, id):
+    carrito = Carrito.objects.get(id = id)
+    Carrito.objects.filter(id = id).update(articulo10=None)
+    context={
+        'carrito': carrito
+    }
+    return render(request, 'ver_carrito.html',context)
 
 def comprarCarrito(request, id):
     cliente = Cliente.objects.get(id=id)
