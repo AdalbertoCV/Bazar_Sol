@@ -13,10 +13,12 @@ from django.core.paginator import Paginator
 from carrito.models import Carrito
 from .models import Administrador
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 def index(request):
     return render(request, 'base.html')
+
 
 class RegistrarCliente(SuccessMessageMixin, CreateView):
     model = User
@@ -24,8 +26,6 @@ class RegistrarCliente(SuccessMessageMixin, CreateView):
     form_class = UserForm
     success_message = '%(username)s se registró con éxito'
     success_url = reverse_lazy('login')
-
-
 
     #Le asigna por defecto al grupo de cliente
     def form_valid(self, form):
@@ -114,6 +114,7 @@ def busca_municipios(request):
         return JsonResponse(data, safe=False)
     return JsonResponse({'error':'Parámetro inválido'}, safe=False)
 
+@permission_required('articulos.permiso_administrador')
 def lista_usuarios(request):
     usuarios = User.objects.all()
     grupos = Group.objects.all()
@@ -129,6 +130,7 @@ def lista_usuarios(request):
     
     return render(request, 'lista_usuarios.html',context)
 
+@permission_required('articulos.permiso_administrador')
 def asignarRoles(request):
     usuarios = request.POST.getlist('usuarios[]')
     if len(usuarios) > 0:
@@ -143,7 +145,6 @@ def asignarRoles(request):
     #simplemente no hace nada, ya que el mensaje de advertencia ya lo mostro el script del formulario
     else:
         return redirect('lista_usuarios')
-
 
 def EditarUsuario(request, id):
     user = get_object_or_404(User, id=id)
@@ -167,6 +168,7 @@ def EditarUsuario(request, id):
     context = {'form': form}
     return render(request, 'editar_usuario.html', context)
 
+@permission_required('articulos.permiso_administrador')
 def EliminarGrupo(request, id):
     user = User.objects.get(id=id)
     if request.method == 'POST':
@@ -178,7 +180,8 @@ def EliminarGrupo(request, id):
             return redirect('lista_usuarios')
         else:
             return redirect('lista_usuarios')
-        
+
+@permission_required('articulos.permiso_administrador')
 def AsignarGrupo(request, id):
     user = User.objects.get(id=id)
     if request.method == 'POST':
@@ -191,12 +194,14 @@ def AsignarGrupo(request, id):
         else:
             return redirect('lista_usuarios')
 
+@permission_required('articulos.permiso_administrador')
 def EliminarUsuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         usuario.delete()
         return redirect('lista_usuarios')
 
+@permission_required('articulos.permiso_administrador')
 def DesactivarUsuario(request, pk):
     usuario = User.objects.get(pk=pk)
     usuario.is_active = False

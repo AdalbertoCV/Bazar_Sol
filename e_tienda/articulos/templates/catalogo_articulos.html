@@ -10,15 +10,15 @@
 <form action="" method="post" id="form">
     <div class="container-fluid mt-2">
         <div class="text-center">
-            <h2 class="text-3x1 tracking-tight font-extrabold text-gray-900 sm:text-4x1">
+            <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
                 Catálogo de Artículos
             </h2>
-            <p class="mt-3 max-w-2x1 mx-auto text-1 text-gray-500 sm:mt-4">
+            <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-500 sm:mt-4">
                 Bueno, Bonito y Barato...
             </p>
         </div>   
         <div class="row">
-            <div id='articulos' class="col-m-9 mx-auto">
+            <div id="articulos" class="col-md-9 mx-auto">
                 <div class="row mx-auto">
                     
                     {% if messages %}
@@ -37,16 +37,49 @@
                             </div>
                         {% endif %}
                     {% endfor %}
-                    {% endif %}
-                    
+                    {% endif %}                    
                     {% for articulo in articulos %}
-                        <div class="card mx-auto mb-3" id={{articulo.id}} style="width: 18rem;"><br>
-                            <img class="card-img-top" src="{{articulo.imagen.url}}" alt="Card image cap">
+                        <div class="card mx-auto mb-3" id="{{ articulo.id }}" style="width: 18rem;"><br>                            
                             <div class="card-body">
-                                <p class="card-title" align="center">{{articulo.nombre}}</p>
-                                <p class="card-text"><b>${{articulo.precio}}</b></p>						
-                                <p class="card-text"><b>Talla: {{articulo.talla}}</b></p>						
-                                <p class="card-text"><b>{{articulo.descripcion}}</b></p><br>
+                                <div id="carousel-{{ articulo.id }}" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#carousel-{{ articulo.id }}" data-slide-to="0" class="active"></li>
+                                      <li data-target="#carousel-{{ articulo.id }}" data-slide-to="1"></li>
+                                      <li data-target="#carousel-{{ articulo.id }}" data-slide-to="2"></li>
+                                      <li data-target="#carousel-{{ articulo.id }}" data-slide-to="3"></li>
+                                      <li data-target="#carousel-{{ articulo.id }}" data-slide-to="4"></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100" src="{{ articulo.imagen.url }}" alt="0" >
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="{{ articulo.imagen2.url }}" alt="1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="{{ articulo.imagen3.url }}" alt="2">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="{{ articulo.imagen4.url }}" alt="3">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="{{ articulo.imagen5.url }}" alt="4">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carousel-{{ articulo.id }}" role="button" data-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carousel-{{ articulo.id }}" role="button" data-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                </div> 
+                                                                                      
+                                <p class="card-title" align="center">{{ articulo.nombre }}</p>
+                                <p class="card-text"><b>${{ articulo.precio }}</b></p>						
+                                <p class="card-text"><b>Talla: {{ articulo.talla }}</b></p>						
+                                <p class="card-text"><b>{{ articulo.descripcion }}</b></p><br>
                                 <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group mr-2" role="group" aria-label="First group" style="position: absolute; bottom: 5px; width: 80%;">
                                       <button type="button" class="btn btn-secondary">Comprar</button>
@@ -57,7 +90,7 @@
                                     </div>
                                 </div>
                             </div>                          
-                        </div>
+                        </div>                   
                     {% endfor %}
                 </div>
             </div>
@@ -67,7 +100,7 @@
 <div class="pagination">
     <span class="step-links">
         {% if object_list.has_previous %}
-            <a href="?{{page_request_var}}={{ object_list.previous_page_number }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
               </svg> Anterior </a>
         {% endif %}
@@ -77,10 +110,20 @@
         </span>
 
         {% if object_list.has_next %}
-            <a href="?{{page_request_var}}={{ object_list.next_page_number }}"> Siguiente <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}"> Siguiente <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
               </svg></a>
         {% endif %}
     </span>
 </div>
 {% endblock contenido %}
+
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+    <script>
+        $('.carousel').carousel();
+    </script>
+{% endblock scripts %}
