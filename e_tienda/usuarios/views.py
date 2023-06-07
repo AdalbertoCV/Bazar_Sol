@@ -114,7 +114,6 @@ def busca_municipios(request):
         return JsonResponse(data, safe=False)
     return JsonResponse({'error':'Parámetro inválido'}, safe=False)
 
-@permission_required('articulos.permiso_administrador')
 def lista_usuarios(request):
     usuarios = User.objects.all()
     grupos = Group.objects.all()
@@ -130,7 +129,6 @@ def lista_usuarios(request):
     
     return render(request, 'lista_usuarios.html',context)
 
-@permission_required('articulos.permiso_administrador')
 def asignarRoles(request):
     usuarios = request.POST.getlist('usuarios[]')
     if len(usuarios) > 0:
@@ -168,7 +166,6 @@ def EditarUsuario(request, id):
     context = {'form': form}
     return render(request, 'editar_usuario.html', context)
 
-@permission_required('articulos.permiso_administrador')
 def EliminarGrupo(request, id):
     user = User.objects.get(id=id)
     if request.method == 'POST':
@@ -181,7 +178,6 @@ def EliminarGrupo(request, id):
         else:
             return redirect('lista_usuarios')
 
-@permission_required('articulos.permiso_administrador')
 def AsignarGrupo(request, id):
     user = User.objects.get(id=id)
     if request.method == 'POST':
@@ -194,14 +190,12 @@ def AsignarGrupo(request, id):
         else:
             return redirect('lista_usuarios')
 
-@permission_required('articulos.permiso_administrador')
 def EliminarUsuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         usuario.delete()
         return redirect('lista_usuarios')
 
-@permission_required('articulos.permiso_administrador')
 def DesactivarUsuario(request, pk):
     usuario = User.objects.get(pk=pk)
     usuario.is_active = False

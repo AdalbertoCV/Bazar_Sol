@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 import math
 
 # Create your views here.
-@permission_required('articulos.permiso_administrador')
 def lista_articulos(request):
     articulos = Articulo.objects.all()
     paginator = Paginator(articulos, 8) 
@@ -25,7 +24,6 @@ def lista_articulos(request):
     }
     return render(request, 'lista_articulos.html', context)
 
-@login_required
 def catalogo_articulos(request):
     articulos = Articulo.objects.all()
     paginator = Paginator(articulos, 8) 
@@ -44,7 +42,6 @@ def catalogo_articulos(request):
     }
     return render(request, 'catalogo_articulos.html', context)
 
-@permission_required('articulos.permiso_administrador')
 def agregar_articulo(request):
     if request.method == 'POST':
         form = FormArticulo(request.POST, request.FILES)
@@ -58,7 +55,6 @@ def agregar_articulo(request):
     }
     return render(request, 'agregar_articulo.html', context)
 
-@permission_required('articulos.permiso_administrador')
 def editar_articulo(request, id):
     articulo = Articulo.objects.get(id = id)
     if request.method == 'POST':
@@ -73,12 +69,10 @@ def editar_articulo(request, id):
     }
     return render(request, 'editar_articulo.html', context)
 
-@permission_required('articulos.permiso_administrador')
 def eliminar_articulo(request, id):
     Articulo.objects.get(id = id).delete()
     return redirect('lista_articulos')
 
-@login_required
 def VerResenas(request, id):
     resenas = Resena.objects.filter(articulo = id)
     articulo = Articulo.objects.get(id=id)
@@ -130,9 +124,6 @@ def VerResenas(request, id):
 
     return render(request, 'ver_resenas.html', context)
 
-
-
-@login_required
 def AgregarResena(request, id):
     articulo = Articulo.objects.get(id = id)
     

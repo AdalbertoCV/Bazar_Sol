@@ -11,7 +11,7 @@ from django.views.generic import TemplateView
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required, permission_required
 
-@permission_required('articulos.permiso_administrador')
+
 def ListaVentas(request):
     ventas = Venta.objects.all()
     paginator = Paginator(ventas, 5) 
@@ -26,7 +26,7 @@ def ListaVentas(request):
     context = {'object_list': ventas,'Ventas': ventas,'page_request_var': page_request_var}
     return render(request, 'reportes/venta_list.html', context)
 
-@permission_required('articulos.permiso_administrador')
+
 def BuscarVentas(request):
     ventas = Venta.objects.all()
     if request.method == 'POST':
@@ -77,7 +77,7 @@ def BuscarVentas(request):
     context = {'object_list': ventas,'Ventas': ventas,'page_request_var': page_request_var}
     return render(request, 'reportes/venta_list.html', context)
 
-@permission_required('articulos.permiso_administrador')
+
 def reporteMensual(request):
     top_clientes = []
     top_productos = []
@@ -124,13 +124,13 @@ def reporteMensual(request):
     context = {'clientes':top_clientes,'productos':top_productos ,'Total': total_ventas}
     return render(request, 'reportes/reporte.html', context)
 
-@permission_required('art.iculos.permiso_administrador')
+
 def entregarVenta(request, idVenta):
     ventas = Venta.objects.all()
     Venta.objects.filter(id=idVenta).update(entregada=True)
     return render(request, 'reportes/venta_list.html', {'Ventas':ventas})
 
-@permission_required('articulos.permiso_administrador')
+
 def descartarVenta(request, idVenta):
     ventas = Venta.objects.all()
     Venta.objects.filter(id=idVenta).delete()

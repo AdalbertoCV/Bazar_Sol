@@ -7,9 +7,8 @@ from datetime import datetime as dt
 import random as r
 from django.contrib import messages
 from django.template import Template, Context
-from django.contrib.auth.decorators import login_required, permission_required
 
-@login_required
+
 def VerCarrito(request,id):
     carrito = Carrito.objects.get(id = id)
 
@@ -25,7 +24,6 @@ def VerCarrito(request,id):
     }
     return render(request, 'ver_carrito.html', context)
 
-@login_required
 def AgregarAlCarrito(request, id, id_carrito):
     articulos = Articulo.objects.all()
     articulo = Articulo.objects.get(id=id)
@@ -73,7 +71,6 @@ def AgregarAlCarrito(request, id, id_carrito):
     
     return render(request, 'catalogo_articulos.html', {'articulos': articulos})
 
-@login_required
 def vaciarCarrito(request, id):
     Carrito.objects.filter(id=id).update(
         articulo1=None,
@@ -156,7 +153,6 @@ def sumarTotal(id):
 
     return lista
 
-@login_required
 def eliminar1(request, id):
     carrito = Carrito.objects.get(id = id)
     carrito = Carrito.objects.filter(id = id).update(articulo1=None)
@@ -171,7 +167,6 @@ def eliminar1(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar2(request, id):
     carrito = Carrito.objects.get(id = id)
     carrito = Carrito.objects.filter(id = id).update(articulo2=None)
@@ -186,7 +181,6 @@ def eliminar2(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar3(request, id):
     carrito = Carrito.objects.get(id = id)
     carrito = Carrito.objects.filter(id = id).update(articulo3=None)
@@ -201,7 +195,6 @@ def eliminar3(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar4(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo4=None)
@@ -216,7 +209,6 @@ def eliminar4(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar5(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo5=None)
@@ -231,7 +223,6 @@ def eliminar5(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar6(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo6=None)
@@ -246,7 +237,6 @@ def eliminar6(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar7(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo7=None)
@@ -261,7 +251,6 @@ def eliminar7(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar8(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo8=None)
@@ -276,7 +265,6 @@ def eliminar8(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar9(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo9=None)
@@ -291,7 +279,6 @@ def eliminar9(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def eliminar10(request, id):
     carrito = Carrito.objects.get(id = id)
     Carrito.objects.filter(id = id).update(articulo10=None)
@@ -306,7 +293,6 @@ def eliminar10(request, id):
     }
     return render(request, 'ver_carrito.html',context)
 
-@login_required
 def comprarCarrito(request, id):
     cliente = Cliente.objects.get(id=id)
     carrito = Carrito.objects.get(id=cliente.Carrito.id)
@@ -421,7 +407,6 @@ def comprarCarrito(request, id):
     vaciar(idCarrito)
     return render(request,'codigo.html', {'codigo':codigo})
 
-@login_required
 def vaciar(id):
     Carrito.objects.filter(id = id).update(articulo1=None)
     Carrito.objects.filter(id = id).update(articulo2=None)
